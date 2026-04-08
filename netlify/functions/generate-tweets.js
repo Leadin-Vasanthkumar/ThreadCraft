@@ -26,8 +26,8 @@ exports.handler = async function (event, context) {
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    // Use gemini-2.0-flash - current stable model
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+    // Use gemini-1.5-flash - more stable free tier limits
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     let prompt = '';
 
