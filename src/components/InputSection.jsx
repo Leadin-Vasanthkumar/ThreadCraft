@@ -3,10 +3,16 @@ export default function InputSection({ activeTab, setActiveTab, videoUrl, setVid
     <div className="input-section">
       <div className="tabs-container">
         <button
-          className={`tab-button ${activeTab === 'url' ? 'active' : ''}`}
-          onClick={() => setActiveTab('url')}
+          className={`tab-button ${activeTab === 'youtube' ? 'active' : ''}`}
+          onClick={() => setActiveTab('youtube')}
         >
           YouTube URL
+        </button>
+        <button
+          className={`tab-button ${activeTab === 'instagram' ? 'active' : ''}`}
+          onClick={() => setActiveTab('instagram')}
+        >
+          Instagram Reel
         </button>
         <button
           className={`tab-button ${activeTab === 'text' ? 'active' : ''}`}
@@ -17,11 +23,11 @@ export default function InputSection({ activeTab, setActiveTab, videoUrl, setVid
       </div>
 
       <div className="input-content">
-        {activeTab === 'url' ? (
+        {(activeTab === 'youtube' || activeTab === 'instagram') ? (
           <input
             type="text"
             className="input-field"
-            placeholder="Paste YouTube video link here... (e.g. https://www.youtube.com/watch?v=...)"
+            placeholder={activeTab === 'youtube' ? "Paste YouTube video link here... (e.g. https://www.youtube.com/watch?v=...)" : "Paste Instagram Reel link here... (e.g. https://www.instagram.com/reel/...)"}
             value={videoUrl}
             onChange={(e) => setVideoUrl(e.target.value)}
           />
