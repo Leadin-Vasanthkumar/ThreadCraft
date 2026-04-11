@@ -6,10 +6,10 @@ import FormatSelector from './components/FormatSelector';
 import AccountTypeSelector from './components/AccountTypeSelector';
 import GenerateButton from './components/GenerateButton';
 import OutputSection from './components/OutputSection';
-import { fetchTranscript, fetchInstagramTranscript, generateTweets } from './utils/api';
+import { fetchTranscript, generateTweets } from './utils/api';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('youtube'); // 'youtube', 'instagram', or 'text'
+  const [activeTab, setActiveTab] = useState('youtube'); // 'youtube' or 'text'
   const [videoUrl, setVideoUrl] = useState('');
   const [transcriptText, setTranscriptText] = useState('');
   const [outputFormat, setOutputFormat] = useState('single'); // 'single' or 'thread'
@@ -18,7 +18,7 @@ function App() {
   const [error, setError] = useState(null);
   const [generatedTweets, setGeneratedTweets] = useState([]);
 
-  const isInputValid = (activeTab === 'youtube' || activeTab === 'instagram') ? videoUrl.trim() !== '' : transcriptText.trim() !== '';
+  const isInputValid = activeTab === 'youtube' ? videoUrl.trim() !== '' : transcriptText.trim() !== '';
 
   const handleGenerate = async () => {
     setError(null);
@@ -31,9 +31,6 @@ function App() {
       if (activeTab === 'youtube') {
         // Fetch youtube transcript first
         currentTranscript = await fetchTranscript(videoUrl);
-      } else if (activeTab === 'instagram') {
-        // Fetch instagram transcript first
-        currentTranscript = await fetchInstagramTranscript(videoUrl);
       }
 
       if (!currentTranscript || currentTranscript.trim() === '') {

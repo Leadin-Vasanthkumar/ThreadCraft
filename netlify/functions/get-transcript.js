@@ -1,3 +1,5 @@
+const { YoutubeTranscript } = require('youtube-transcript');
+
 exports.handler = async function (event, context) {
   // Only allow POST
   if (event.httpMethod !== 'POST') {
@@ -14,31 +16,8 @@ exports.handler = async function (event, context) {
       };
     }
 
-    const accessKey = process.env.SOCIALKIT_API_KEY;
-
-    if (!accessKey || accessKey === 'your_api_key_here') {
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ error: 'SOCIALKIT_API_KEY is not configured on the server.' }),
-      };
-    }
-
-    // Call SocialKit YouTube Transcript API
-    const apiUrl = `https://api.socialkit.dev/youtube/transcript?access_key=${encodeURIComponent(accessKey)}&url=${encodeURIComponent(videoUrl)}`;
-
-    const apiResponse = await fetch(apiUrl);
-    const apiData = await apiResponse.json();
-
-    if (!apiResponse.ok || !apiData.success) {
-      const errorMsg = apiData.error || apiData.message || 'SocialKit API returned an error.';
-      console.error('SocialKit API error:', apiData);
-      return {
-        statusCode: apiResponse.status || 500,
-        body: JSON.stringify({ error: errorMsg }),
-      };
-    }
-
-    const transcript = apiData.data?.transcript;
+    const transcriptArray = await YoutubeTranscript.fetchTranscript(videoUrl);
+    const transcript = transcriptArray.map(t => t.text).join(' ');
 
     if (!transcript) {
       return {

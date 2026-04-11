@@ -29,33 +29,7 @@ export const fetchTranscript = async (videoUrl) => {
   return data.transcript;
 };
 
-export const fetchInstagramTranscript = async (videoUrl) => {
-  const response = await fetch('/.netlify/functions/get-instagram-transcript', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ videoUrl }),
-  });
 
-  // Guard: parse JSON safely
-  const text = await response.text();
-  let data;
-  try {
-    data = JSON.parse(text);
-  } catch {
-    console.error('Non-JSON response from get-instagram-transcript:', text.slice(0, 300));
-    throw new Error(
-      response.status === 404
-        ? 'Netlify Functions not found. Run `netlify dev` instead of `npm run dev` for local testing.'
-        : `Server error (${response.status}): unexpected response format.`
-    );
-  }
-
-  if (!response.ok) {
-    throw new Error(data.error || 'Failed to fetch Instagram transcript');
-  }
-
-  return data.transcript;
-};
 
 export const generateTweets = async (transcript, format, accountType) => {
   const response = await fetch('/.netlify/functions/generate-tweets', {
