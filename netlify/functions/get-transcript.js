@@ -1,4 +1,4 @@
-const { YoutubeTranscript } = require('youtube-transcript');
+const YouTubeTranscriptApi = require('youtube-transcript-api').default;
 
 exports.handler = async function (event, context) {
   // Only allow POST
@@ -16,7 +16,12 @@ exports.handler = async function (event, context) {
       };
     }
 
-    const transcriptArray = await YoutubeTranscript.fetchTranscript(videoUrl);
+    // Extract video ID from URL
+    const videoIdMatch = videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&]{11})/);
+    const videoId = videoIdMatch ? videoIdMatch[1] : videoUrl;
+
+    const transcriptClient = new YouTubeTranscriptApi();
+    const transcriptArray = await transcriptClient.getTranscript(videoId);
     const transcript = transcriptArray.map(t => t.text).join(' ');
 
     if (!transcript) {
