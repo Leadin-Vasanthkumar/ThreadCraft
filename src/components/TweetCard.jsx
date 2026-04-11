@@ -4,13 +4,13 @@ const TweetCard = ({ tweet, index, isThread, accountType }) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(tweet.text);
+    navigator.clipboard.writeText(tweet);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   const getCharLimit = () => accountType === 'verified' ? 25000 : 280;
-  const currentLen = tweet.text.length;
+  const currentLen = tweet.length;
   const limit = getCharLimit();
   
   const statusClass = currentLen > limit ? 'danger' : (currentLen > limit * 0.9 ? 'warning' : 'safe');
@@ -24,7 +24,7 @@ const TweetCard = ({ tweet, index, isThread, accountType }) => {
         </span>
       </div>
       
-      <div className="tweet-text">{tweet.text}</div>
+      <div className="tweet-text">{tweet}</div>
       
       <button 
         className={`copy-button ${copied ? 'copied' : ''}`} 

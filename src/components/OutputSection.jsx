@@ -4,7 +4,7 @@ const OutputSection = ({ tweets, format, accountType }) => {
   if (!tweets || tweets.length === 0) return null;
 
   const handleCopyAll = () => {
-    const allText = tweets.map(t => t.text).join('\n\n---\n\n');
+    const allText = tweets.join('\n\n---\n\n');
     navigator.clipboard.writeText(allText);
     alert('All pieces copied to clipboard.');
   };
