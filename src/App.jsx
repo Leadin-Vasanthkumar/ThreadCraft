@@ -65,7 +65,7 @@ function App() {
           setTranscriptText={setTranscriptText}
         />
 
-        <div className="options-container">
+        <div className="options-container animate-in stagger-3">
           <FormatSelector 
             outputFormat={outputFormat} 
             setOutputFormat={setOutputFormat} 
@@ -78,11 +78,13 @@ function App() {
 
         {error && <div className="error-message">⚠️ {error}</div>}
 
-        <GenerateButton 
-          isGenerating={isGenerating} 
-          disabled={!isInputValid} 
-          onClick={handleGenerate} 
-        />
+        <div className="animate-in stagger-3">
+          <GenerateButton 
+            isGenerating={isGenerating} 
+            disabled={!isInputValid} 
+            onClick={handleGenerate} 
+          />
+        </div>
 
         <OutputSection 
           tweets={generatedTweets} 

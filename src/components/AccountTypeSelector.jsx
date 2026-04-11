@@ -1,22 +1,23 @@
-export default function AccountTypeSelector({ accountType, setAccountType }) {
+const AccountTypeSelector = ({ accountType, setAccountType }) => {
   return (
     <div className="selector-group">
-      <div className="selector-label">X (Twitter) Account Type</div>
+      <label className="selector-label">Account Privilege</label>
       <div className="pill-container">
-        <button
+        <button 
           className={`pill-button ${accountType === 'free' ? 'active' : ''}`}
           onClick={() => setAccountType('free')}
         >
-          Free (280 chars max)
+          Standard
         </button>
-        <button
+        <button 
           className={`pill-button ${accountType === 'verified' ? 'active' : ''}`}
           onClick={() => setAccountType('verified')}
-          title="Verified/Pro accounts support longer tweets"
         >
-          Verified / Pro 
+          Premium
         </button>
       </div>
     </div>
   );
-}
+};
+
+export default AccountTypeSelector;
